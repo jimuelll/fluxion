@@ -48,7 +48,7 @@ const fragmentShader = /* glsl */ `
     col *= 1.0 - 0.06 * (1.0 - uDim) * hash(vec2(floor(t * 30.0), uSeed)) * (0.3 + uNoise); // flicker, off when resting
     vec2 v = uv * (1.0 - uv);
     col *= pow(clamp(v.x * v.y * 18.0, 0.0, 1.0), 0.3);            // vignette
-    col *= mix(1.25, 0.4, uDim);
+    col *= mix(1.25, 0.7, uDim);
     col = mix(col, vec3(1.0), uFlash);
 
     gl_FragColor = vec4(col, 1.0);

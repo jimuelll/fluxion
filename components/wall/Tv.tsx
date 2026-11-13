@@ -61,7 +61,7 @@ export function Tv({ index, slot, style, lite, live, onHover, onPick, registerSc
     const k = Math.min(1, dt * 4);
     u.uDim.value += ((live ? 0 : 1) - u.uDim.value) * k;
     if (material.userData.locked) return; // a dive owns uNoise while it runs
-    const target = !style ? 0.45 : live ? 0.06 : 0.3;
+    const target = !style ? 0.45 : live ? 0.06 : 0.12;
     u.uNoise.value += (target - u.uNoise.value) * k;
   });
 
