@@ -1,0 +1,13 @@
+/* Placeholder style. Global CSS is fine: this route has its own root layout. */
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  min-height: 100vh;
+  padding: 2rem;
+  background: #0b0b0b;
+  color: #9dff7a;
+  font-family: var(--font-mono), monospace;
+}
+
+h1 { font-size: clamp(2.5rem, 10vw, 7rem); text-transform: uppercase; letter-spacing: -0.04em; }
+p { margin-top: 1rem; max-width: 40ch; opacity: 0.75; }

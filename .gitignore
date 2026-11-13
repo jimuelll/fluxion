@@ -1,0 +1,10 @@
+node_modules
+.next
+.claude
+out
+
+# third-party captures for design reference only; never shipped
+reference
+next-env.d.ts
+*.tsbuildinfo
+scripts
