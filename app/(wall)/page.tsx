@@ -1,3 +1,4 @@
+import Intro from '@/components/intro/Intro';
 import Wall from '@/components/wall/WallLoader';
 import { STYLES } from '@/lib/styles';
 import s from './wall.module.css';
@@ -15,6 +16,7 @@ export default function Home() {
         ))}
       </nav>
       <Wall />
+      <Intro />
     </main>
   );
 }

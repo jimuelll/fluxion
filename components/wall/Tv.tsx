@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, type ThreeEvent } from '@react-three/fiber';
 import * as THREE from 'three';
 import type { Slot, StyleEntry } from '@/lib/styles';
@@ -13,13 +13,15 @@ type Props = {
   slot: Slot;
   style?: StyleEntry;
   lite: boolean;
+  /** On air: the one TV whose preview plays at full brightness. Every other screen rests. */
+  live: boolean;
+  onHover: (index: number | null) => void;
   onPick: (index: number, screen: THREE.Mesh) => void;
   registerScreen: (index: number, screen: THREE.Mesh) => void;
 };
 
-export function Tv({ index, slot, style, lite, onPick, registerScreen }: Props) {
+export function Tv({ index, slot, style, lite, live, onHover, onPick, registerScreen }: Props) {
   const screen = useRef<THREE.Mesh>(null);
-  const [hover, setHover] = useState(false);
   // Deterministic per-slot variation so the wall looks the same on every load.
   const sidePanel = index % 3 !== 1;
   const color = BODY_COLORS[(index * 5) % BODY_COLORS.length];
@@ -40,12 +42,27 @@ export function Tv({ index, slot, style, lite, onPick, registerScreen }: Props) 
     };
   }, [material, index, registerScreen]);
 
+  // Coming on air: restart the loop and burst into static, like flipping to this channel. Going off air: pause.
+  useEffect(() => {
+    const map = material.uniforms.uMap.value;
+    const video = map instanceof THREE.VideoTexture ? (map.image as HTMLVideoElement) : null;
+    if (live) {
+      material.uniforms.uNoise.value = 0.9;
+      if (video) {
+        video.currentTime = 0;
+        video.play().catch(() => {}); // autoplay refused: the texture just holds its first frame
+      }
+    } else video?.pause();
+  }, [live, material]);
+
   useFrame((state, dt) => {
     const u = material.uniforms;
     u.uTime.value = state.clock.elapsedTime;
+    const k = Math.min(1, dt * 4);
+    u.uDim.value += ((live ? 0 : 1) - u.uDim.value) * k;
     if (material.userData.locked) return; // a dive owns uNoise while it runs
-    const target = !style ? 0.5 : hover ? 0.55 : 0.08;
-    u.uNoise.value += (target - u.uNoise.value) * Math.min(1, dt * 8);
+    const target = !style ? 0.45 : live ? 0.06 : 0.3;
+    u.uNoise.value += (target - u.uNoise.value) * k;
   });
 
   const sw = slot.w * (sidePanel ? 0.68 : 0.82);
@@ -56,11 +73,11 @@ export function Tv({ index, slot, style, lite, onPick, registerScreen }: Props) 
     ? {
         onPointerOver: (e: ThreeEvent<PointerEvent>) => {
           e.stopPropagation();
-          setHover(true);
+          onHover(index);
           document.body.style.cursor = 'pointer';
         },
         onPointerOut: () => {
-          setHover(false);
+          onHover(null);
           document.body.style.cursor = '';
         },
         onClick: (e: ThreeEvent<MouseEvent>) => {

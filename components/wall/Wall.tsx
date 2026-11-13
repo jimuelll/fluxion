@@ -14,6 +14,7 @@ function detectLite() {
 }
 
 const FOV = 40;
+const CHANNEL_MS = 8500; // a little longer than one preview loop
 const HOME_LOOK = new THREE.Vector3(0, 0.9, 0);
 
 /** Camera distance that fits the wall's width (or height) at the current aspect. */
@@ -40,6 +41,21 @@ function Scene({ lite, overlay, returnFrom }: { lite: boolean; overlay: React.Re
   );
 
   const registerScreen = useCallback((i: number, m: THREE.Mesh) => screens.current.set(i, m), []);
+
+  // One channel on air at a time: it plays at full brightness while every other screen rests, and the wall
+  // flips to the next style every CHANNEL_MS. Hovering a TV puts it on air and holds the rotation there.
+  const channels = useMemo(() => slots.map(({ i }) => i).filter((i) => styleAt(i)), [slots]);
+  const [onAir, setOnAir] = useState(() => (returnFrom !== null && channels.includes(returnFrom) ? returnFrom : channels[0]));
+  const [holding, setHolding] = useState(false);
+  const onHover = useCallback((i: number | null) => {
+    setHolding(i !== null);
+    if (i !== null) setOnAir(i);
+  }, []);
+  useEffect(() => {
+    if (holding || channels.length < 2) return;
+    const id = setInterval(() => setOnAir((c) => channels[(channels.indexOf(c) + 1) % channels.length]), CHANNEL_MS);
+    return () => clearInterval(id);
+  }, [holding, channels]);
 
   /** One timeline for both directions: forward dives in and navigates, reversed it pulls back out. */
   const buildTimeline = useCallback(
@@ -111,7 +127,7 @@ function Scene({ lite, overlay, returnFrom }: { lite: boolean; overlay: React.Re
     <>
       <Room lite={lite} />
       {slots.map(({ slot, i }) => (
-        <Tv key={i} index={i} slot={slot} style={styleAt(i)} lite={lite} onPick={dive} registerScreen={registerScreen} />
+        <Tv key={i} index={i} slot={slot} style={styleAt(i)} lite={lite} live={i === onAir} onHover={onHover} onPick={dive} registerScreen={registerScreen} />
       ))}
     </>
   );

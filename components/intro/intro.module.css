@@ -1,0 +1,40 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 24px;
+  background: #000;
+  transition: opacity 0.6s;
+}
+
+.intro[data-leaving='true'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.text {
+  max-width: 28ch;
+  font: 700 clamp(28px, 5vw, 56px) / 1.2 system-ui, sans-serif;
+  text-align: center;
+}
+
+.enter {
+  padding: 10px 28px;
+  font: 14px ui-monospace, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000;
+  background: #f2f2f2;
+  border: 0;
+  cursor: pointer;
+}
+
+.enter:focus-visible {
+  outline: 2px solid #7fff9f;
+  outline-offset: 3px;
+}

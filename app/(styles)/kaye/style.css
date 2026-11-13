@@ -560,6 +560,7 @@ html.js .hero__phones .phone--right { animation-delay: 0.5s; }
   .wordmark { font-size: 26px; }
 
   .hero__title { font-size: clamp(60px, 19vw, 110px); }
+  .hero .squiggle { opacity: 0.3; } /* same hue as the headline: on a narrow screen it would cut through the words */
   .hero__head { padding-top: 40px; }
   .hero__head .sticker { font-size: 12px; padding: 5px 11px; }
   .hero__s1 { left: 16%; top: 0; }

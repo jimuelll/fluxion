@@ -15,6 +15,7 @@ const fragmentShader = /* glsl */ `
   uniform float uNoise;  // 0 = clean picture, 1 = pure static
   uniform float uFlash;  // 0..1 white-out at the end of a dive
   uniform float uLite;   // 1 = cheap path for mobile / low power
+  uniform float uDim;    // 0 = on air, 1 = resting: darker picture, slower calmer static
   uniform float uSeed;
 
   float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
@@ -40,13 +41,15 @@ const fragmentShader = /* glsl */ `
       col = texture2D(uMap, uv).rgb;
     }
 
-    float n = hash(floor(uv * vec2(320.0, 240.0)) + fract(t * 7.0) * 91.0);
+    // Static re-rolls in steps; resting screens step slowly so a wall of them doesn't strobe.
+    float n = hash(floor(uv * vec2(320.0, 240.0)) + floor(t * mix(24.0, 6.0, uDim)) * 0.731);
     col = mix(col, vec3(n), 0.07 + 0.88 * uNoise);
     col *= 0.88 + 0.12 * sin(uv.y * 240.0 * 3.14159);              // scanlines
-    col *= 1.0 - 0.06 * hash(vec2(floor(t * 30.0), uSeed)) * (0.3 + uNoise); // flicker
+    col *= 1.0 - 0.06 * (1.0 - uDim) * hash(vec2(floor(t * 30.0), uSeed)) * (0.3 + uNoise); // flicker, off when resting
     vec2 v = uv * (1.0 - uv);
     col *= pow(clamp(v.x * v.y * 18.0, 0.0, 1.0), 0.3);            // vignette
-    col = mix(col * 1.25, vec3(1.0), uFlash);
+    col *= mix(1.25, 0.4, uDim);
+    col = mix(col, vec3(1.0), uFlash);
 
     gl_FragColor = vec4(col, 1.0);
     #include <colorspace_fragment>
@@ -64,6 +67,7 @@ export function createCrtMaterial(map: THREE.Texture, lite: boolean, seed: numbe
       uNoise: { value: 0 },
       uFlash: { value: 0 },
       uLite: { value: lite ? 1 : 0 },
+      uDim: { value: 1 },
       uSeed: { value: seed },
     },
   });
@@ -100,7 +104,7 @@ export function createCardTexture(label: string | null) {
   return tex;
 }
 
-/** Muted looping preview video as a texture. Starts playing immediately. */
+/** Muted looping preview video as a texture. Starts paused; the wall decides which TV is on air. */
 export function createVideoTexture(basename: string) {
   const v = document.createElement('video');
   v.muted = true;
@@ -114,7 +118,6 @@ export function createVideoTexture(basename: string) {
     s.type = type;
     v.appendChild(s);
   }
-  v.play().catch(() => {}); // autoplay may be refused; the texture just stays on its first frame
   const tex = new THREE.VideoTexture(v);
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;

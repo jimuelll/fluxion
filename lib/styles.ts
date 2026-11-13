@@ -12,8 +12,8 @@ export type StyleEntry = {
 
 // Placeholders that prove the pipeline; replaced once the real 6–8 styles are chosen.
 export const STYLES: StyleEntry[] = [
-  { slug: 'bakawan', name: 'Bakawan', category: 'landing', slot: 12 },
-  { slug: 'kaye', name: 'Kaye Eats', category: 'marketing', slot: 2 },
+  { slug: 'bakawan', name: 'Bakawan', category: 'landing', preview: 'bakawan', slot: 12 },
+  { slug: 'kaye', name: 'Kaye Eats', category: 'marketing', preview: 'kaye', slot: 2 },
   { slug: 'demo-noise', name: 'Demo Noise', category: 'creative', slot: 3 },
 ];
 
