@@ -1,19 +1,20 @@
-export type Category = 'landing' | 'marketing' | 'product' | 'dashboard' | 'creative';
+﻿export type Category = 'landing' | 'marketing' | 'product' | 'dashboard' | 'creative';
 
 export type StyleEntry = {
   slug: string;
   name: string;
   category: Category;
-  /** Basename in /public/previews → <preview>.webm / .mp4. Omit until recorded; the TV shows a test card instead. */
+  /** Basename in /public/previews â†’ <preview>.webm / .mp4. Omit until recorded; the TV shows a test card instead. */
   preview?: string;
   /** Index into WALL_SLOTS. */
   slot: number;
 };
 
-// Placeholders that prove the pipeline; replaced once the real 6–8 styles are chosen.
+// Placeholders that prove the pipeline; replaced once the real 6â€“8 styles are chosen.
 export const STYLES: StyleEntry[] = [
   { slug: 'bakawan', name: 'Bakawan', category: 'landing', preview: 'bakawan', slot: 12 },
   { slug: 'kaye', name: 'Kaye Eats', category: 'marketing', preview: 'kaye', slot: 2 },
+  { slug: 'agos', name: 'Agos', category: 'dashboard', preview: 'agos', slot: 8 },
   { slug: 'demo-noise', name: 'Demo Noise', category: 'creative', slot: 3 },
 ];
 

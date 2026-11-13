@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#000"/>
+  <defs><path id="f" d="M18 14H46V23H27V28H40V36H27V50H18Z"/></defs>
+  <use href="#f" x="-3" y="2" fill="#ff2fa0"/>
+  <use href="#f" x="3" y="-2" fill="#7fff9f"/>
+  <use href="#f" fill="#f2f2f2"/>
+  <path d="M10 33H54" stroke="#000" stroke-width="2.5"/>
+  <circle cx="52" cy="12" r="2.2" fill="#ffc72c"/>
+</svg>
