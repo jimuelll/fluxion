@@ -33,11 +33,13 @@ function Scene({ lite, overlay, returnFrom }: { lite: boolean; overlay: React.Re
   const busy = useRef(false);
   const screens = useRef(new Map<number, THREE.Mesh>());
   const pointer = useRef(new THREE.Vector2());
-  const home = useMemo(() => homePosition(size.width / size.height, lite), [size, lite]);
+  // Portrait screens get the smaller wall too, or the full one shrinks to untappable thumbnails.
+  const compact = lite || size.width < size.height;
+  const home = useMemo(() => homePosition(size.width / size.height, compact), [size, compact]);
 
   const slots = useMemo(
-    () => WALL_SLOTS.map((slot, i) => ({ slot, i })).filter(({ slot }) => !lite || slot.mobile),
-    [lite],
+    () => WALL_SLOTS.map((slot, i) => ({ slot, i })).filter(({ slot }) => !compact || slot.mobile),
+    [compact],
   );
 
   const registerScreen = useCallback((i: number, m: THREE.Mesh) => screens.current.set(i, m), []);

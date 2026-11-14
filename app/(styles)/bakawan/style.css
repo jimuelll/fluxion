@@ -151,6 +151,9 @@ html.js [data-reveal].in .word { opacity: 1; filter: blur(0); transform: none; }
 }
 .menu {
   inset: 76px 16px auto;
+  width: auto;
+  max-height: calc(100dvh - 76px - 16px);
+  overflow-y: auto;
   margin: 0;
   padding: 20px;
   border: 0;
@@ -163,8 +166,9 @@ html.js [data-reveal].in .word { opacity: 1; filter: blur(0); transform: none; }
   font-size: 22px;
 }
 .menu:popover-open { display: flex; }
+.menu::backdrop { background: rgb(14 58 68 / 0.35); }
 .menu a:not(.btn) { padding: 8px 0; text-decoration: none; border-bottom: 1px solid rgb(14 58 68 / 0.1); }
-.menu .btn { margin-top: 16px; }
+.menu .btn { margin-top: 16px; align-self: flex-start; }
 
 /* ---------- hero ---------- */
 

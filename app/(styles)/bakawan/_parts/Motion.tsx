@@ -59,6 +59,9 @@ export function Motion() {
     // Header: tucks away while scrolling down, returns on any scroll up.
     const nav = document.querySelector<HTMLElement>('.nav');
     const menu = document.getElementById('tw-menu');
+    // In-page anchors don't light-dismiss a popover, so close it on link tap.
+    const closeMenu = (e: Event) => (e.target as Element).closest('a') && menu?.hidePopover();
+    menu?.addEventListener('click', closeMenu);
     let lastY = scrollY;
     const onNav = () => {
       const y = scrollY;
@@ -96,6 +99,7 @@ export function Motion() {
       io.disconnect();
       removeEventListener('scroll', onScroll);
       removeEventListener('scroll', onNav);
+      menu?.removeEventListener('click', closeMenu);
       pile?.removeEventListener('pointermove', onPile);
       pile?.removeEventListener('pointerleave', offPile);
     };

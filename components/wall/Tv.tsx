@@ -89,7 +89,8 @@ export function Tv({ index, slot, style, lite, live, onHover, onPick, registerSc
     : {};
 
   return (
-    <group position={[slot.x, slot.base + slot.h / 2, slot.z]} rotation={[0, slot.rotY, 0]}>
+    // Handlers on the whole set, not just the glass: a bigger target for fingers.
+    <group position={[slot.x, slot.base + slot.h / 2, slot.z]} rotation={[0, slot.rotY, 0]} {...interactive}>
       <mesh position={[0, 0, -depth / 2]} castShadow={false}>
         <boxGeometry args={[slot.w, slot.h, depth]} />
         <meshStandardMaterial color={color} roughness={0.7} metalness={0.05} />
@@ -99,7 +100,7 @@ export function Tv({ index, slot, style, lite, live, onHover, onPick, registerSc
         <planeGeometry args={[sw * 1.06, sh * 1.08]} />
         <meshStandardMaterial color="#050505" roughness={0.9} />
       </mesh>
-      <mesh ref={screen} position={[sx, 0, 0.006]} material={material} {...interactive}>
+      <mesh ref={screen} position={[sx, 0, 0.006]} material={material}>
         <planeGeometry args={[sw, sh]} />
       </mesh>
       {sidePanel && (

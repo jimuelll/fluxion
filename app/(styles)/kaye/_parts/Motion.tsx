@@ -108,10 +108,21 @@ export function Motion() {
     const nodes = proc ? [...proc.querySelectorAll<HTMLElement>('.process__node')] : [];
     const stepN = proc?.querySelector<HTMLElement>('[data-step-n]');
 
+    // Header: tucks away while scrolling down, returns on any scroll up (same as Bakawan's).
+    const top = document.querySelector<HTMLElement>('.top');
+    const menu = document.getElementById('nr-menu');
+    let lastY = scrollY;
+
     let raf = 0;
     const frame = () => {
       raf = 0;
       const vh = innerHeight;
+
+      const y = scrollY;
+      if (Math.abs(y - lastY) >= 6) {
+        top?.classList.toggle('is-hidden', y > lastY && y > 160 && !menu?.matches(':popover-open'));
+        lastY = y;
+      }
 
       for (const s of squiggles) {
         const r = s.svg.getBoundingClientRect();
@@ -168,6 +179,9 @@ export function Motion() {
     frame();
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onResize);
+    // In-page anchors don't light-dismiss a popover, so close it on link tap.
+    const closeMenu = (e: Event) => (e.target as Element).closest('a') && menu?.hidePopover();
+    menu?.addEventListener('click', closeMenu);
     // Rebuild the spine whenever the list itself changes size (fonts, images, breakpoints).
     const ro = new ResizeObserver(onResize);
     if (svc) ro.observe(svc);
@@ -176,6 +190,7 @@ export function Motion() {
       io.disconnect();
       removeEventListener('scroll', onScroll);
       removeEventListener('resize', onResize);
+      menu?.removeEventListener('click', closeMenu);
       cancelAnimationFrame(raf);
     };
   }, []);
