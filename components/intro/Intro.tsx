@@ -33,7 +33,7 @@ export default function Intro() {
   if (!open) return null;
   return (
     <div className={s.intro} data-leaving={leaving} role="dialog" aria-label="About Fluxion">
-      <VerseText text={TEXT} tone="dark" idle={false}className={s.text} />
+      <VerseText text={TEXT} tone="dark" idle={false} speed={2.5} className={s.text} />
       <button ref={btn} className={s.enter} onClick={enter}>
         Enter
       </button>

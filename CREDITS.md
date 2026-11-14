@@ -45,3 +45,23 @@ All photos are from Unsplash under the [Unsplash License](https://unsplash.com/l
 | p8.webp | [Cocktail with orange garnish](https://unsplash.com/photos/a-hand-holds-a-cocktail-with-ice-and-orange-garnish-PMZc285tk6Y) | Juan Saav |
 
 Fonts: Archivo and Instrument Sans (SIL Open Font License).
+
+## Tropa
+
+Photos are from Unsplash under the [Unsplash License](https://unsplash.com/license) (free to use, attribution not required but given here). Files live in `public/tropa/`, served as WebP from Unsplash's CDN at the sizes used.
+
+| File | Photo |
+|---|---|
+| dusk.webp | [Sea of clouds](https://unsplash.com/photos/sea-of-clouds-nv7WX42LKjU) |
+| sunrise.webp | [Clouds and sun during sunset](https://unsplash.com/photos/clouds-and-sun-during-sunset-WzazSaQF1F8) |
+| owner.webp | [Man in a floral shirt sitting on a chair](https://unsplash.com/photos/man-in-yellow-and-white-floral-button-up-shirt-sitting-on-chair-QbCiAUrFjag) |
+| sarisari.webp | [Small store with goods behind a wire mesh](https://unsplash.com/photos/small-store-with-goods-displayed-behind-a-wire-mesh-E6dFUSDKhv0) |
+| store.webp | [Small store interior with shelves of goods](https://unsplash.com/photos/small-store-interior-with-shelves-of-goods-Q6lJLndyw-4) |
+| kubo.webp | [Small tropical store with bamboo fence](https://unsplash.com/photos/small-tropical-store-with-bamboo-fence-and-palm-trees-xPlwrCCTFOo) |
+| counter.webp | [Grocery store workers behind the counter](https://unsplash.com/photos/grocery-store-workers-behind-counter-_-wzXGIGt0M) |
+| isaw.webp | [Skewers of food on a blue tray](https://unsplash.com/photos/several-skewers-of-food-on-a-blue-tray-YtC2-HT3pxY) |
+| kwekkwek.webp | [Serving food from a bowl](https://unsplash.com/photos/a-person-is-serving-food-from-a-bowl-2SifhsGcpLk) |
+
+Crew avatars in `public/tropa/crew/`: [Open Peeps](https://www.openpeeps.com/) by Pablo Stanley via [DiceBear](https://www.dicebear.com/styles/open-peeps/), CC0 1.0.
+
+Icons: [Lucide](https://lucide.dev) (ISC). Font: Onest (SIL Open Font License).
