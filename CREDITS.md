@@ -65,3 +65,9 @@ Photos are from Unsplash under the [Unsplash License](https://unsplash.com/licen
 Crew avatars in `public/tropa/crew/`: [Open Peeps](https://www.openpeeps.com/) by Pablo Stanley via [DiceBear](https://www.dicebear.com/styles/open-peeps/), CC0 1.0.
 
 Icons: [Lucide](https://lucide.dev) (ISC). Font: Onest (SIL Open Font License).
+
+## Echofall
+
+Hero art in `public/echofall/hero-cut.webp` (background removed from the supplied illustration): [ARTIST AND SOURCE TO CONFIRM].
+
+Icons are drawn for this style. Fonts: Big Shoulders and Inter (SIL Open Font License).

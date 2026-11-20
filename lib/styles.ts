@@ -16,6 +16,7 @@ export const STYLES: StyleEntry[] = [
   { slug: 'kaye', name: 'Kaye Eats', category: 'marketing', preview: 'kaye', slot: 2 },
   { slug: 'agos', name: 'Agos', category: 'dashboard', preview: 'agos', slot: 8 },
   { slug: 'tropa', name: 'Tropa', category: 'product', preview: 'tropa', slot: 9 },
+  { slug: 'echofall', name: 'Echofall', category: 'landing', preview: 'echofall', slot: 4 },
   { slug: 'demo-noise', name: 'Demo Noise', category: 'creative', slot: 3 },
 ];
 
