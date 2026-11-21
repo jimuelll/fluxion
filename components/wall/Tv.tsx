@@ -70,8 +70,12 @@ export function Tv({ index, slot, style, lite, live, onHover, onPick, registerSc
   });
 
   const sw = slot.w * (sidePanel ? 0.68 : 0.82);
-  const sh = slot.h * 0.74;
+  // A labeled set gives up a little glass and lifts it, so the nameplate fits on the face below.
+  const sh = slot.h * (style ? 0.7 : 0.74);
   const sx = sidePanel ? -slot.w * 0.1 : 0;
+  const sy = style ? slot.h * 0.04 : 0;
+  const plateGap = slot.h / 2 + sy - (sh * 1.08) / 2; // face strip under the bezel
+  const plateW = Math.min(sw * 0.8, (plateGap * 0.68) / 0.1875);
 
   const interactive = style
     ? {
@@ -111,11 +115,11 @@ export function Tv({ index, slot, style, lite, live, onHover, onPick, registerSc
         </mesh>
       ))}
       {/* recessed black bezel */}
-      <mesh position={[sx, 0, 0.002]}>
+      <mesh position={[sx, sy, 0.002]}>
         <planeGeometry args={[sw * 1.06, sh * 1.08]} />
         <meshStandardMaterial color="#050505" roughness={0.9} />
       </mesh>
-      <mesh ref={screen} position={[sx, 0, 0.006]} material={material}>
+      <mesh ref={screen} position={[sx, sy, 0.006]} material={material}>
         <planeGeometry args={[sw, sh]} />
       </mesh>
       {sidePanel && (
@@ -136,8 +140,8 @@ export function Tv({ index, slot, style, lite, live, onHover, onPick, registerSc
         </group>
       )}
       {label && (
-        <mesh position={[sx, -(sh * 1.08 + slot.h) / 4, 0.008]}>
-          <planeGeometry args={[Math.min(sw * 0.75, slot.h * 0.62), Math.min(sw * 0.75, slot.h * 0.62) * 0.1875]} />
+        <mesh position={[sx, -slot.h / 2 + plateGap / 2, 0.008]}>
+          <planeGeometry args={[plateW, plateW * 0.1875]} />
           <meshBasicMaterial map={label} toneMapped={false} />
         </mesh>
       )}
