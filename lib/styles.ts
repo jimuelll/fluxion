@@ -45,7 +45,7 @@ export const WALL_SLOTS: Slot[] = [
   // second row
   { x: -2.05, z: 0.2, base: 0.7, w: 0.65, h: 0.5, rotY: 0.3 },
   { x: -1.05, z: 0.02, base: 0.7, w: 0.6, h: 0.5, rotY: 0.12, mobile: true },
-  { x: 0, z: -0.05, base: 0.7, w: 0.62, h: 0.5, rotY: 0 },
+  { x: 0, z: -0.05, base: 0.7, w: 0.62, h: 0.5, rotY: 0, mobile: true },
   { x: 1.05, z: 0.02, base: 0.7, w: 0.6, h: 0.5, rotY: -0.12, mobile: true },
   { x: 2.05, z: 0.2, base: 0.7, w: 0.65, h: 0.5, rotY: -0.3 },
   // top row

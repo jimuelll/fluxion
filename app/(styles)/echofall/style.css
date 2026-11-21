@@ -6,7 +6,7 @@ a:hover { color: var(--accent); }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .btn-primary:focus-visible { outline-color: var(--ink); }
 ::selection { background: var(--accent); color: #fff; }
-html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+html { scroll-behavior: smooth; scroll-padding-top: 112px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /* header lives outside the hero (so it stays pinned all page long); the hero tucks back under it so its art offsets are unchanged */
@@ -38,7 +38,8 @@ h1 { margin: 0; display: flex; flex-direction: column; font-family: var(--font-d
 .t-fall { position: relative; margin: -0.2em 0 0 0.5em; color: #fff; -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 4px 3px 0 rgba(196,18,62,0.55); }
 
 .hero-spacer { height: min(43.3vw, 746px); }
-.hero-title p { margin: 10px 0 6px; max-width: min(380px, 25vw); text-shadow: 0 0 6px #fff, 0 0 12px #fff; text-wrap: pretty; font-size: 15px; line-height: 1.7; color: #3A3F44; }
+/* measure stops 24px short of the art's left edge so no brushstroke runs under the copy */
+.hero-title p { margin: 10px 0 6px; max-width: clamp(220px, calc(100vw - min(72vw, 1240px) - max(40px, 50vw - 640px) - 24px), 380px); text-shadow: 0 0 6px #fff, 0 0 12px #fff; text-wrap: pretty; font-size: 15px; line-height: 1.7; color: #3A3F44; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 600; font-size: 13px; letter-spacing: 0.06em; }
 .btn-primary { padding: 0 22px; background: var(--accent); color: #fff; clip-path: polygon(0 0, 100% 0, 100% 68%, 91% 100%, 0 100%); }
@@ -144,7 +145,7 @@ a.btn, .nav a.cta { transition: background-color .2s cubic-bezier(.16,1,.3,1), c
 /* world */
 .world-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: center; }
 .regions { list-style: none; margin: 0; padding: 0; }
-.regions li { padding: 14px 0 14px 20px; border-left: 2px solid var(--mist); }
+.regions li { padding: 14px 0 14px 20px; border-left: 1px solid var(--thread); }
 .regions h3 { margin: 0 0 4px; font-family: var(--font-display); font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: .02em; }
 .regions p { margin: 0; max-width: 52ch; font-size: 15px; line-height: 1.55; color: var(--muted); }
 .map { margin: 0; padding: 22px; background: #F2F7F6; }
@@ -248,6 +249,7 @@ a.btn, .nav a.cta { transition: background-color .2s cubic-bezier(.16,1,.3,1), c
   .board-grid > .plate-cast, .board-grid > .plate-news { grid-column: 1 / -1; }
   .roster { grid-template-columns: 1fr; }
   .op:nth-child(even) { margin-top: 0; }
+  .prereg-head .actions { flex-direction: column; width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .plate::before, .plate-title svg { transition: none; } }
 
@@ -260,9 +262,11 @@ a.btn, .nav a.cta { transition: background-color .2s cubic-bezier(.16,1,.3,1), c
   @keyframes thread-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
   @keyframes fall-in { from { translate: .28em .1em; opacity: 0; } }
   @keyframes paint-in { from { opacity: 0; scale: 1.05; } }
-  .hero-line { animation: thread-in 1.2s cubic-bezier(.16,1,.3,1) .2s both; }
-  .t-fall { animation: fall-in 1s cubic-bezier(.16,1,.3,1) .55s both; }
-  .hero-paint { transform-origin: 60% 50%; animation: paint-in 1.8s cubic-bezier(.16,1,.3,1) both; }
+  /* wait out Chrome's 0.7s CRT power-on so the hero plays where it can be seen */
+  :root { --tv: .7s; }
+  .hero-line { animation: thread-in 1.2s cubic-bezier(.16,1,.3,1) calc(var(--tv) + .2s) both; }
+  .t-fall { animation: fall-in 1s cubic-bezier(.16,1,.3,1) calc(var(--tv) + .55s) both; }
+  .hero-paint { transform-origin: 60% 50%; animation: paint-in 1.8s cubic-bezier(.16,1,.3,1) var(--tv) both; }
 
   @supports (animation-timeline: view()) {
     @keyframes progress { to { transform: scaleX(1); } }
@@ -280,8 +284,8 @@ a.btn, .nav a.cta { transition: background-color .2s cubic-bezier(.16,1,.3,1), c
 
     /* hero depth: paint sits furthest back; art, line and title move as one so the line keeps hitting the ECHO/FALL seam */
     .hero-art, .hero-title { animation: drift-near linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
-    .hero-line { animation: thread-in 1.2s cubic-bezier(.16,1,.3,1) .2s both, drift-near linear both; animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh; }
-    .hero-paint { animation: paint-in 1.8s cubic-bezier(.16,1,.3,1) both, drift-far linear both; animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh; }
+    .hero-line { animation: thread-in 1.2s cubic-bezier(.16,1,.3,1) calc(var(--tv) + .2s) both, drift-near linear both; animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh; }
+    .hero-paint { animation: paint-in 1.8s cubic-bezier(.16,1,.3,1) var(--tv) both, drift-far linear both; animation-timeline: auto, scroll(root); animation-range: normal, 0 100vh; }
 
     /* headings: the thread draws through as the heading arrives, the outlined echo falls into register */
     .sec-title { view-timeline: --title block; }

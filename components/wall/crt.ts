@@ -104,6 +104,28 @@ export function createCardTexture(label: string | null) {
   return tex;
 }
 
+/** Little backlit nameplate under the screen of a TV that has a site behind it. */
+export function createLabelTexture(label: string) {
+  const c = document.createElement('canvas');
+  c.width = 512;
+  c.height = 96;
+  const g = c.getContext('2d')!;
+  g.fillStyle = '#141210';
+  g.fillRect(0, 0, c.width, c.height);
+  g.strokeStyle = '#b9a35a';
+  g.lineWidth = 6;
+  g.strokeRect(5, 5, c.width - 10, c.height - 10);
+  g.fillStyle = '#f1e6c8';
+  g.font = 'bold 52px monospace';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillText(label.toUpperCase(), c.width / 2, c.height / 2 + 3, c.width - 48);
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = 4;
+  return tex;
+}
+
 /** Muted looping preview video as a texture. Starts paused; the wall decides which TV is on air. */
 export function createVideoTexture(basename: string) {
   const v = document.createElement('video');
